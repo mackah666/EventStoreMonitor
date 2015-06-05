@@ -10,7 +10,7 @@ var config = {
     'eventStore': {
         'address': "127.0.0.1",
         'port': 1113,
-        'stream': 'MackahSE',
+        'stream': 'Monitoring',
         'credentials': {
             'username': "admin",
             'password': "changeit"
@@ -43,8 +43,6 @@ var written = false;
 var read = false;
 var readMissing = false;
 
-var destinationId = "MackahSE";
-
 console.log('Subscribing to ' + streamId + "...");
 var correlationId = connection.subscribeToStream(streamId, true, function(streamEvent) {
     onEventAppeared(streamEvent);
@@ -58,7 +56,7 @@ new CronJob('*/15 * * * * *', function() {
 
 var newEvent = {
     eventId: uuid.v1(),
-    eventType: 'MackahE',
+    eventType: 'MonitorEvent',
     data: {
     	id: uuid.v1(),
         textProperty: "monitoring",
@@ -69,8 +67,8 @@ var newEvent = {
 };
 
 var newEvents = [ newEvent ];
-console.log('Writing event to ' + destinationId + '...');
-connection.writeEvents(destinationId, EventStoreClient.ExpectedVersion.Any, false, newEvents, credentials, function(completed) {
+console.log('Writing event to ' + streamId + '...');
+connection.writeEvents(streamId, EventStoreClient.ExpectedVersion.Any, false, newEvents, credentials, function(completed) {
     console.log('Events written result: ' + EventStoreClient.OperationResult.getName(completed.result));
 });
 
