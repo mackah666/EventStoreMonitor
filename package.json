@@ -1,0 +1,27 @@
+{
+  "name": "eventstoremonitor",
+  "version": "1.0.0",
+  "description": "eventstoremonitor",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mackah666/EventStoreMonitor.git"
+  },
+  "keywords": [
+    "eventstore"
+  ],
+  "author": "mackah666",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mackah666/EventStoreMonitor/issues"
+  },
+  "homepage": "https://github.com/mackah666/EventStoreMonitor#readme",
+  "dependencies": {
+    "cron": "^1.0.9",
+    "event-store-client": "0.0.5",
+    "node-uuid": "^1.4.3"
+  }
+}
