@@ -9,6 +9,7 @@ var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var uuid = require('node-uuid');
 var EventStoreClient = require('event-store-client');
+var wait = require('wait.for');
 
 // Sample application to demonstrate how to use the Event Store Client
 /*************************************************************************************************/
@@ -89,7 +90,9 @@ router.get('/', function(req, res) {
 	connection.writeEvents(streamId, EventStoreClient.ExpectedVersion.Any, false, newEvents, credentials, function(completed) {
 	    console.log('Events written result: ' + EventStoreClient.OperationResult.getName(completed.result));
 	});
-
+    console.log("waiting");
+	//setTimeout(3000);
+	console.log("carry on!");
 	console.log("send response");
 
     res.json({ message: 'hooray! welcome to our api!' });   
