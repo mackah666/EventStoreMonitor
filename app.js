@@ -10,7 +10,7 @@ var config = {
     'eventStore': {
         'address': "127.0.0.1",
         'port': 1113,
-        'stream': '$stats-127.0.0.1:2113',
+        'stream': 'MackahSE',
         'credentials': {
             'username': "admin",
             'password': "changeit"
@@ -44,15 +44,13 @@ var read = false;
 var readMissing = false;
 
 var destinationId = "MackahSE";
-console.log('Writing events to ' + destinationId + '...');
+
+console.log('Subscribing to ' + streamId + "...");
+var correlationId = connection.subscribeToStream(streamId, true, function(streamEvent) {
+    onEventAppeared(streamEvent);
+}, onSubscriptionConfirmed, onSubscriptionDropped, credentials);
 
 
-console.log('Writing guid to ' + uuid.v1() + '...');
-var idx = 0
-
-
-
-var newEvents = [];
 
 
 
@@ -71,10 +69,9 @@ var newEvent = {
 };
 
 var newEvents = [ newEvent ];
+console.log('Writing event to ' + destinationId + '...');
 connection.writeEvents(destinationId, EventStoreClient.ExpectedVersion.Any, false, newEvents, credentials, function(completed) {
     console.log('Events written result: ' + EventStoreClient.OperationResult.getName(completed.result));
-    // written = true;
-    // closeIfDone();
 });
 
 }, null, true, 'America/Los_Angeles');
@@ -83,18 +80,16 @@ connection.writeEvents(destinationId, EventStoreClient.ExpectedVersion.Any, fals
 
 
 
+function onEventAppeared(streamEvent) {
+    if (streamEvent.streamId != streamId) {
+        console.log("Unknown event from " + streamEvent.streamId);
+        return;
+    }
+    console.log("Event handled by subscriber!!!!!")
+    console.log(streamEvent.eventNumber + " " + streamEvent.eventId //+ " - " +
 
-
-
-
-
-
-
-
-
-
-
-
+    );
+}
 
 function closeIfDone() {
     if (written) {
