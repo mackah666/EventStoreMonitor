@@ -86,16 +86,9 @@ function onEventAppeared(streamEvent) {
         return;
     }
     console.log("Event handled by subscriber!!!!!")
-    console.log(streamEvent.eventNumber + " " + streamEvent.eventId //+ " - " +
+    console.log(streamEvent.eventNumber + " => " + streamEvent.eventId + " => " + streamEvent.data.dept//+ " - " +
 
     );
-}
-
-function closeIfDone() {
-    if (written) {
-        console.log("All done!");
-        connection.close();
-    }
 }
 
 function onSubscriptionConfirmed(confirmation) {
